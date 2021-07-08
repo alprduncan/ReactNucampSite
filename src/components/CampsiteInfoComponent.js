@@ -25,8 +25,9 @@ const minLength = len => val => val && (val.length >= len);
         });
     } 
     handleSubmit(values) {
-        console.log('Current state is: ' + JSON.stringify(values));
-        alert('Current state is: ' + JSON.stringify(values));
+        this.toggleModal();
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+        
     }
 
     render() {
@@ -113,7 +114,7 @@ function RenderCampsite({campsite}) {
     );
    }
 
-    function RenderComments ({comments}) {
+    function RenderComments ({comments, addComment, campsiteId}) {
        if (comments) {
            return (
                <div className="col-md-5 m-1">
@@ -136,7 +137,7 @@ function RenderCampsite({campsite}) {
                      )
                  }
                  )} 
-                 <div><CommentForm /></div>
+                 <div><CommentForm campsiteId={campsiteId} addComment={addComment} /></div>
                </div>
            );
        }
@@ -160,7 +161,11 @@ function RenderCampsite({campsite}) {
             </div>
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} />
+                    <RenderComments 
+                        comments={props.comments} 
+                        addComment={props.addComment}
+                        campsiteId={props.campsite.id}
+                        />
                 </div>
             </div>
             );
