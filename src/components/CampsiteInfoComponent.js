@@ -4,7 +4,7 @@ Label, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
-import { baseURL } from '../shared/baseUrl';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = val => val && val.length;
 const maxLength = len => val => !val || (val.length <= len);
@@ -28,7 +28,7 @@ const minLength = len => val => val && (val.length >= len);
     } 
     handleSubmit(values) {
         this.toggleModal();
-        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+        this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);
         
     }
 
@@ -116,7 +116,7 @@ function RenderCampsite({campsite}) {
     );
    }
 
-    function RenderComments ({comments, addComment, campsiteId}) {
+    function RenderComments ({comments, postComment, campsiteId}) {
        if (comments) {
            return (
                <div className="col-md-5 m-1">
@@ -139,7 +139,7 @@ function RenderCampsite({campsite}) {
                      )
                  }
                  )} 
-                 <div><CommentForm campsiteId={campsiteId} addComment={addComment} /></div>
+                 <div><CommentForm campsiteId={campsiteId} postComment={postComment} /></div>
                </div>
            );
        }
@@ -185,7 +185,7 @@ function RenderCampsite({campsite}) {
                     <RenderCampsite campsite={props.campsite} />
                     <RenderComments 
                         comments={props.comments} 
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         campsiteId={props.campsite.id}
                         />
                 </div>
